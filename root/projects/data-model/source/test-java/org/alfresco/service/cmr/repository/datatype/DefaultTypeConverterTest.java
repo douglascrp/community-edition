@@ -137,15 +137,20 @@ public class DefaultTypeConverterTest extends TestCase
         assertEquals(new BigInteger("1234567890123456789"), DefaultTypeConverter.INSTANCE.convert(BigInteger.class, "1234567890123456789"));
         assertEquals(new BigDecimal("12345678901234567890.12345678901234567890"), DefaultTypeConverter.INSTANCE.convert(BigDecimal.class, "12345678901234567890.12345678901234567890"));
         GregorianCalendar cal = new GregorianCalendar();
-        cal.set(Calendar.YEAR, 2004);
-        cal.set(Calendar.MONTH, 3);
-        cal.set(Calendar.DAY_OF_MONTH, 12);
+        cal.set(Calendar.YEAR, 2015);
+        cal.set(Calendar.MONTH, 9);
+        cal.set(Calendar.DAY_OF_MONTH, 18);
         cal.set(Calendar.HOUR, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         String isoDate = ISO8601DateFormat.format(cal.getTime());
+        // test for full date format with time info
         assertEquals(isoDate, ISO8601DateFormat.format(DefaultTypeConverter.INSTANCE.convert(Date.class, isoDate)));
+
+        // test for partial date format without time info
+        assertEquals(isoDate, ISO8601DateFormat.format(DefaultTypeConverter.INSTANCE.convert(Date.class, "2015-10-18")));
+
         assertEquals(new Duration("P25D"), DefaultTypeConverter.INSTANCE.convert(Duration.class, "P25D"));
         assertEquals("woof", DefaultTypeConverter.INSTANCE.convert(String.class, "woof"));
         
